@@ -7,18 +7,23 @@ import cors from "cors"
 
 
 dotenv.config();
+
+
 const app = express();
+
+// Middleware
 app.use(bodyParser.json())
 app.use(cookieParser())
-
-
-app.use(core({
+app.use(cors({
     origin: process.env.CLIENT_URL,
     Credentials: true,
 }));
 
 
-
+// ✅ test route (for checking)
+app.get("/", (req, res) => {
+  res.send("Backend working ✅");
+});
 
 
 
