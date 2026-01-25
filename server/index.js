@@ -20,9 +20,9 @@ app.use(cors({
 }));
 
 
-// ✅ test route (for checking)
+// test route (for checking)
 app.get("/", (req, res) => {
-  res.send("Backend working ✅");
+  res.send("Backend working");
 });
 
 
@@ -35,5 +35,5 @@ app.get("/", (req, res) => {
 
 app.listen(process.env.PORT, async () => {
     await ConnectDB()
-    console.log(`Server running on http:localhost:${process.env.PORT}`);
+    console.log(`Server running on http://localhost:${process.env.PORT}`);
 })
