@@ -1,45 +1,38 @@
-import { Department } from '../models/Department.model.js';
-import { Employee } from "../models/Employee.model.js";
-import { organization } from '../models/Organization.model.js';
+import { Department } from "../models/Department.model.js" 
+import { Employee } from "../models/Employee.model.js"
+import { Organization } from "../models/Organization.model.js"
 
-// Get All Employees
-export const HandleAllEmployee = async (req, res) => {
+export const HandleAllEmployees = async (req, res) => {
     try {
-        const employee = await Employee.find({
-            organizationID: req.ORGID }).populate("department", "name").select("firstname lastname contactnumber department attendence notice salary leaverequest generaterequest isverified");
-            return res.status(200).json({ success: true, data: employee, type: "AllEmployee" });
-        } catch (error) {
-            return res.status(500).json({ success: false,
-                error: error, message: "Internal server error" })
-        }
-    }
-
-export const HandleAllEmployeeIDS = async (req, res) => {
-    try {
-        const employee = await Employee.find({
-            organizationID: req.ORGID }).populate ("department", "name").select("firstname lastname department")
-            return res.status(200).json({success: true, date: employee, type: "AllEmployeeIDS"})
+        const employees = await Employee.find({ organizationID: req.ORGID }).populate("department", "name").select("firstname lastname email contactnumber department attendance notice salary leaverequest generaterequest isverified")
+        return res.status(200).json({ success: true, data: employees, type: "AllEmployees" })
     } catch (error) {
-        return res.status(500).json({ success: false,
-        error: error, message: "Internal server error" })
+        return res.status(500).json({ success: false, error: error, message: "internal server error" })
+    }
+}
+
+export const HandleAllEmployeesIDS = async (req, res) => {
+    try {
+        const employees = await Employee.find({ organizationID: req.ORGID }).populate("department", "name").select("firstname lastname department")
+        return res.status(200).json({ success: true, data: employees, type: "AllEmployeesIDS" })
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error, message: "internal server error" })
     }
 }
 
 export const HandleEmployeeByHR = async (req, res) => {
     try {
         const { employeeId } = req.params
-        const employee = await Employee.findOne({ _id:
-        employeeId, organizationID: req.ORGID }).select("firstname lastname email contactnumber department attendence notice salary leaverequest generaterequest")
+        const employee = await Employee.findOne({ _id: employeeId, organizationID: req.ORGID }).select("firstname lastname email contactnumber department attendance notice salary leaverequest generaterequest")
 
         if (!employee) {
-            return res.status(404).json({ success: false,
-                message: "employee not found" })
+            return res.status(404).json({ success: false, message: "employee not found" })
         }
-
+        
         return res.status(200).json({ success: true, data: employee, type: "GetEmployee" })
     }
     catch (error) {
-         return res.status(404).json({ success: false, error: error, message: "employee not found" }) 
+        return res.status(404).json({ success: false, error: error, message: "employee not found" }) 
     }
 }
 
