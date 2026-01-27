@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+import EmployeeRouter from './routes/Employee.route.js';
 import { ConnectDB } from './config/ConnectDB.js';
 import cookieParser from 'cookie-parser';
 import cors from "cors"
@@ -18,6 +19,10 @@ app.use(cors({
     origin: process.env.CLIENT_URL,
     Credentials: true,
 }));
+
+// Routes
+app.use("/api/v1/employee", EmployeeRouter)
+
 
 
 // test route (for checking)
